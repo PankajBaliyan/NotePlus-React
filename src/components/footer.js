@@ -3,7 +3,6 @@ import React from 'react'
 const Footer = () => {
     return (
         <>
-            {/* <!-- Wrapper--> */}
             <footer class="iq-footer">
                 <div class="container-fluid">
                     <div class="row">
