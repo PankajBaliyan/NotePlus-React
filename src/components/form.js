@@ -1,7 +1,27 @@
 import React, { useState } from "react";
-import AddIcon from "@mui/icons-material/Add";
+import Note from "../components/notes";
 
 const Form = (props) => {
+    const [notes, setNotes] = useState([]);
+
+    // Add Note
+    const addNote = (note) => {
+        setNotes([...notes, note]);
+    };
+
+    // Delete Note
+    const deleteNote = (uniqueId) => {
+        const newNotes = notes.filter((ele, idx) => {
+            return idx !== uniqueId;
+        });
+        setNotes(newNotes);
+    };
+
+    // Send data to upper level component to view in view modal box
+    const modalData = (dataArray) => {
+        props.getData(dataArray)
+    }
+
     const [formData, setFormData] = useState({
         title: "",
         content: "",
@@ -9,7 +29,10 @@ const Form = (props) => {
 
     // Submit Form Data
     const formSubmitHandler = (e) => {
-        props.addNote(formData);
+        // props.addNote(formData);
+        if(formData.title !== '' && formData.content !== ''){
+            addNote(formData);
+        }
         setFormData({
             title: "",
             content: "",
@@ -36,14 +59,6 @@ const Form = (props) => {
 
     return (
         <>
-            {/* <div>
-                <form>
-                    <input type="text" name='title' onChange={formInputChangeHandler} value={formData.title} placeholder='Enter title' />
-                    <textarea name="content" cols="30" rows="2" onChange={formInputChangeHandler} value={formData.content} placeholder='Enter content'></textarea>
-                    <AddIcon onClick={formSubmitHandler}/>
-
-                </form>
-            </div> */}
             <div className="container-fluid note-details">
                 <div className="desktop-header">
                     <div className="card card-block topnav-left">
@@ -72,7 +87,7 @@ const Form = (props) => {
                     <div className="card topnav-right">
                         <div className="card-body card-content-right">
                             <ul className="list-inline m-0 p-0 d-flex align-items-center justify-content-around">
-                                Total Note's
+                                Total Note's : {notes.length}
                             </ul>
                         </div>
                     </div>
@@ -84,30 +99,18 @@ const Form = (props) => {
                                 <div className="card-body write-card">
                                     <div className="container-fluid collapse-fluid">
                                         <div className="row">
-                                            {/* <form> */}
                                             <div className="col-md-12 col-lg-12 p-0">
                                                 <div className="card card-transparent card-block card-stretch event-note">
                                                     <div className="card-body px-0 bukmark">
-                                                        <h1 className="mb-3" contentEditable>
-                                                            Note title
-                                                        </h1>
-                                                        <p>Enter Note content.</p>
-                                                        <input
-                                                            type="text"
-                                                            name="title"
-                                                            onChange={formInputChangeHandler}
-                                                            value={formData.title}
-                                                            placeholder="Enter title"
-                                                        />
-                                                        <textarea
-                                                            name="content"
-                                                            cols="30"
-                                                            rows="2"
-                                                            onChange={formInputChangeHandler}
-                                                            value={formData.content}
-                                                            placeholder="Enter content"
-                                                        ></textarea>
-                                                        <AddIcon onClick={formSubmitHandler} />
+                                                        <div class="form-group">
+                                                            <label for="note-title">Note title 👇</label>
+                                                            <input type="text" name="title" class="form-control" id="note-title" aria-describedby="noteHelp" placeholder="Title Here" onChange={formInputChangeHandler} value={formData.title} required/>
+                                                            <small id="noteHelp" class="form-text text-muted">Please provide a concise and descriptive title for your note.</small>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="note-content">Note content 👇</label>
+                                                            <textarea class="form-control" id="note-content" rows="3" name="content" onChange={formInputChangeHandler} value={formData.content} placeholder="Please input the content for your note here."></textarea>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -130,7 +133,6 @@ const Form = (props) => {
                                                     Save
                                                 </button>
                                             </div>
-                                            {/* </form> */}
                                         </div>
                                     </div>
                                 </div>
@@ -148,95 +150,18 @@ const Form = (props) => {
                                             <div className="icon active animate__animated animate__fadeIn i-grid">
                                                 <div className="row">
                                                     {/* loop start from here  */}
-                                                    <div className="col-lg-4 col-md-6">
-                                                        <div className="card card-block card-stretch card-height card-bottom-border-info note-detail">
-                                                            <div className="card-header d-flex justify-content-between pb-1">
-                                                                <div className="icon iq-icon-box-2 icon-border-info rounded">
-                                                                    <svg
-                                                                        width="23"
-                                                                        height="23"
-                                                                        className="svg-icon"
-                                                                        id="iq-main-01"
-                                                                        xmlns="http://www.w3.org/2000/svg"
-                                                                        fill="none"
-                                                                        viewBox="0 0 24 24"
-                                                                        stroke="currentColor"
-                                                                    >
-                                                                        <path
-                                                                            stroke-linecap="round"
-                                                                            stroke-linejoin="round"
-                                                                            stroke-width="2"
-                                                                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                                                                        />
-                                                                    </svg>
-                                                                </div>
-                                                                <div className="card-header-toolbar d-flex align-items-center">
-                                                                    <div className="dropdown">
-                                                                        <span
-                                                                            className="dropdown-toggle dropdown-bg"
-                                                                            id="note-dropdownMenuButton4"
-                                                                            data-toggle="dropdown"
-                                                                            aria-expanded="false"
-                                                                            role="button"
-                                                                        >
-                                                                            <i className="ri-more-fill"></i>
-                                                                        </span>
-                                                                        <div
-                                                                            className="dropdown-menu dropdown-menu-right"
-                                                                            aria-labelledby="note-dropdownMenuButton4"
-                                                                        >
-                                                                            <a
-                                                                                href="#"
-                                                                                className="dropdown-item new-note1"
-                                                                                data-toggle="modal"
-                                                                                data-target="#new-note1"
-                                                                            >
-                                                                                <i className="las la-eye mr-3"></i>View
-                                                                            </a>
-                                                                            <a
-                                                                                href="#"
-                                                                                className="dropdown-item edit-note1"
-                                                                                data-toggle="modal"
-                                                                                data-target="#edit-note1"
-                                                                            >
-                                                                                <i className="las la-pen mr-3"></i>Edit
-                                                                            </a>
-                                                                            <a
-                                                                                className="dropdown-item"
-                                                                                data-extra-toggle="delete"
-                                                                                data-closest-elem=".card"
-                                                                                href="#"
-                                                                            >
-                                                                                <i className="las la-trash-alt mr-3"></i>
-                                                                                Delete
-                                                                            </a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div className="card-body rounded">
-                                                                <h4 className="card-title">Weekly Planner</h4>
-                                                                <p className="mb-3 card-description short">
-                                                                    Virtual Digital Marketing Course every week on
-                                                                    Monday, Wednesday and Saturday.Virtual Digital
-                                                                    Marketing Course every week on Monday
-                                                                </p>
-                                                            </div>
-                                                            <div className="card-footer">
-                                                                <div className="d-flex align-items-center justify-content-between note-text note-text-info">
-                                                                    <a href="#" className="">
-                                                                        <i className="las la-user-friends mr-2 font-size-20"></i>
-                                                                        03 share
-                                                                    </a>
-                                                                    <a href="#" className="">
-                                                                        <i className="las la-calendar mr-2 font-size-20"></i>
-                                                                        12 Jan 2021
-                                                                    </a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    {notes.map((ele, idx) => {
+                                                        return (
+                                                            <Note
+                                                                title={ele.title}
+                                                                content={ele.content}
+                                                                uniqueId={idx}
+                                                                key={idx}
+                                                                deleteNote={deleteNote}
+                                                                modalData={modalData}
+                                                            />
+                                                        );
+                                                    })}
                                                     {/* loop end here  */}
                                                 </div>
                                             </div>
