@@ -2,6 +2,22 @@ import React from "react";
 // import EditNoteIcon from '@mui/icons-material/EditNote';
 
 const Header = () => {
+    const searchNote = () => {
+        //search note
+        let input = document.querySelector('#searchInput')
+        let query = input.value.toUpperCase();
+        let noteCards = document.querySelectorAll('.note-box')
+        let noteNames = document.querySelectorAll('.search-title')
+        for(let i=0; i<noteNames.length; ++i){
+            let name = noteNames[i].innerText.toUpperCase();
+            if(name.indexOf(query) != -1){
+                noteCards[i].style.display = 'block'
+            } else {
+                noteCards[i].style.display = 'none'
+            }
+        }
+    }
+
     return (
         <>
             <div className="iq-sidebar  sidebar-default">
@@ -31,7 +47,7 @@ const Header = () => {
                 <div className="iq-search-bar device-search mb-3">
                     <form action="#" className="searchbox">
                         <a className="search-link" href="#"><i className="ri-search-line"></i></a>
-                        <input type="text" className="text search-input" placeholder="Search"/>
+                        <input type="text" className="text search-input" id="searchInput" placeholder="Search" onChange={searchNote}/>
                     </form>
                 </div>
                 <nav className="iq-sidebar-menu">
