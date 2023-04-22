@@ -1,5 +1,4 @@
 import React from "react";
-import DeleteIcon from '@mui/icons-material/Delete';
 
 const Note = (props) => {
 
@@ -20,7 +19,7 @@ const Note = (props) => {
 
     return (
         <>
-            <div className="col-lg-4 col-md-6">
+            <div className="col-lg-4 col-md-6 note-box">
                 <div className="card card-block card-stretch card-height card-bottom-border-info note-detail">
                     <div className="card-header d-flex justify-content-between pb-1">
                         <div className="icon iq-icon-box-2 icon-border-info rounded">
@@ -37,9 +36,9 @@ const Note = (props) => {
                                     <a href="#" className="dropdown-item new-note1" data-toggle="modal" data-target="#new-note1" onClick={setModalData}>
                                         <i className="las la-eye mr-3"></i>View
                                     </a>
-                                    <a href="#" className="dropdown-item edit-note1" data-toggle="modal" data-target="#edit-note1" >
+                                    {/* <a href="#" className="dropdown-item edit-note1" data-toggle="modal" data-target="#edit-note1" >
                                         <i className="las la-pen mr-3"></i>Edit
-                                    </a>
+                                    </a> */}
                                     <a className="dropdown-item" data-extra-toggle="delete" data-closest-elem=".card" href="#" onClick={noteDeleteHandler}>
                                         <i className="las la-trash-alt mr-3"></i>
                                         Delete
@@ -50,14 +49,14 @@ const Note = (props) => {
                     </div>
 
                     <div className="card-body rounded" data-toggle="modal" data-target="#new-note1" onClick={setModalData}>
-                        <h4 className="card-title">{props.title}</h4>
+                        <h4 className="card-title search-title">{props.title}</h4>
                         <p className="mb-3 card-description short">{props.content}</p>
                     </div>
                     <div className="card-footer">
                         <div className="d-flex align-items-center justify-content-between note-text note-text-info">
                             <a href="#" className="">
-                                <i className="las la-user-friends mr-2 font-size-20"></i>
-                                00 share
+                                <i className="las la-user mr-2 font-size-20"></i>
+                                Only You
                             </a>
                             <a href="#" className="">
                                 <i className="las la-calendar mr-2 font-size-20"></i>
